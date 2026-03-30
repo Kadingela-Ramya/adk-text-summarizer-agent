@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Summarizer Agent</title>
+</head>
+<body>
+    <h2>AI Text Summarization Agent</h2>
+    <textarea id="inputText" rows="10" cols="60" placeholder="Enter text here..."></textarea><br><br>
+    <button onclick="summarizeText()">Summarize</button>
+
+    <h3>Summary:</h3>
+    <p id="result"></p>
+
+    <script>
+        async function summarizeText() {
+            const text = document.getElementById("inputText").value;
+
+            const response = await fetch("http://127.0.0.1:8080/summarize", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: text })
+            });
+
+            const data = await response.json();
+            document.getElementById("result").innerText = data.summary || data.error;
+        }
+    </script>
+</body>
+</html>
